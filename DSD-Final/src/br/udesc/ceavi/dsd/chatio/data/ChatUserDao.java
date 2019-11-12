@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 /**
@@ -111,6 +113,22 @@ public class ChatUserDao implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(ChatUser.class, id);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public ChatUser findChatUserByLogin(String login, String password){
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<ChatUser> c = cq.from(ChatUser.class);
+            cq.select(c)
+              .where(cb.equal(c.get("nickname"), login))
+              .where(cb.equal(c.get("password"), password));
+            Query q = em.createQuery(cq);
+            return (ChatUser) q.getSingleResult();
         } finally {
             em.close();
         }

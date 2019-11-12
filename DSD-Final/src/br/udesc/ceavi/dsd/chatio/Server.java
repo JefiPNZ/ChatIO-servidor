@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ public class Server {
     
     private Server(){
         super();
+        this.clients = new ArrayList<ClientNode>();
         try {
             this.socket = new ServerSocket(SERVER_CONNECTION_PORT);
             this.socket.setReuseAddress(true);
@@ -59,7 +61,9 @@ public class Server {
     private void listen() {
         while(true){
             try {
+                System.out.println("Aguardando conexão na porta " + this.socket.getLocalPort());
                 Socket         connection = this.socket.accept();
+                System.out.println("Conectado!");
                 PrintWriter    out        = new PrintWriter(connection.getOutputStream(), true);
                 BufferedReader in         = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 this.initClient(out, in, connection.getInetAddress().getHostAddress() + ":" + connection.getPort());
@@ -71,7 +75,7 @@ public class Server {
     
     public void initClient(PrintWriter out, BufferedReader in, String ip){
         ClientNode node = new ClientNode(in, out, ip);
-        clients.add(node);
+        this.clients.add(node);
         new Thread(node).start();
     }
     

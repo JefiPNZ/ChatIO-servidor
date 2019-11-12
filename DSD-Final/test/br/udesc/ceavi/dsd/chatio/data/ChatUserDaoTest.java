@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -74,6 +75,23 @@ public class ChatUserDaoTest {
         this.dao.destroy(userId);
         int qtdUsersEnd = this.dao.getChatUserCount();
         Assert.assertThat("Usuário não removido.", qtdUsersEnd, Matchers.lessThan(qtdUsersBegin));
+    }
+    
+    /**
+     * Test of findChatUserByLogin method, of class ChatUserDao.
+     */
+    @Test
+    public void testFindChatUserByLogin(){
+        String expected = "Teste";
+        this.insertTestUser();
+        ChatUser user = this.dao.findChatUserByLogin("Teste", "123456789");
+        Assert.assertEquals(expected, user.getNickname());
+        try {
+            this.dao.findChatUserByLogin("Teste", "12345678");
+            Assert.assertTrue("Encontrou um Usuário inexistente.", false);
+        } catch(NoResultException ex){
+            Assert.assertTrue(true);
+        }
     }
     
     private long insertTestUser(){

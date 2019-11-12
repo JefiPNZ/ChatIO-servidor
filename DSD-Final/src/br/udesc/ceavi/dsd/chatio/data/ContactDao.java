@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 /**
@@ -101,6 +103,21 @@ public class ContactDao implements Serializable {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Contact> findContactEntities(ChatUser user) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Contact> c = cq.from(Contact.class);
+            cq.select(c).where(cb.equal(c.get("user"), user.getId()));
+            
+            Query q = em.createQuery(cq);
             return q.getResultList();
         } finally {
             em.close();

@@ -3,6 +3,7 @@ package br.udesc.ceavi.dsd.chatio.data;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.hamcrest.Matchers;
@@ -85,6 +86,26 @@ public class ContactDaoTest {
         Assert.assertThat("Usuário não removido.", qtdUsersEnd, Matchers.lessThan(qtdUsersBegin));
     }
     
+    /**
+     * Test of findContactEntities using User, of class ChatUserDao.
+     */
+    @Test
+    public void testeFindContactEntitierByUser(){
+        ChatUser user1 = this.insertTestUser(1);
+        ChatUser user2 = this.insertTestUser(2);
+        this.insertTestContact(user1, user2);
+        
+        ChatUser user3 = this.insertTestUser(3);
+        this.insertTestContact(user1, user3);
+        ChatUser user4 = this.insertTestUser(4);
+        this.insertTestContact(user3, user4);
+        
+        List<Contact> contacts = this.dao.findContactEntities(user1);
+    
+        // São inseridos 3 contatos, porém deve retornar apenas 2 na query.
+        Assert.assertEquals("Usuários não adicionados.", 2, contacts.size());
+    }
+    
     private ChatUser insertTestUser(int count){
         ChatUser user = new ChatUser();
         user.setBirthDate(new GregorianCalendar(1999, Calendar.JANUARY, 1).getTime());
@@ -101,8 +122,8 @@ public class ContactDaoTest {
     
     private long insertTestContact(ChatUser user1, ChatUser user2){
         Contact contact = new Contact();
-        contact.setContact(user1);
-        contact.setUser(user2);
+        contact.setUser(user1);
+        contact.setContact(user2);
         this.dao.create(contact);
         return contact.getId();
     }

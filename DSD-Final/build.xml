@@ -31,7 +31,7 @@
         <delete dir="${build.report.cobertura.dir}" />
         <mkdir dir="${build.instrumented.dir}" />
         <mkdir dir="${build.report.cobertura.dir}" />
-        <cobertura-instrument todir="${build.instrumented.dir}">
+        <cobertura-instrument todir="${build.instrumented.dir}" ignoreTrivial="true">
             <fileset dir="${build.classes.dir}">
                 <include name="**/*.class"/>
             </fileset>
@@ -40,6 +40,8 @@
     
     <target name="coberturareport" depends="init,test">
         <cobertura-report format="html" srcdir="${src.dir}"
+                                  destdir="${build.report.cobertura.dir}"/>
+        <cobertura-report format="xml" srcdir="${src.dir}"
                                   destdir="${build.report.cobertura.dir}"/>
     </target>
 </project>

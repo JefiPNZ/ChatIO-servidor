@@ -2,6 +2,7 @@ package br.udesc.ceavi.dsd.chatio.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Classe para execução dos comandos do servidor.
@@ -41,8 +42,11 @@ public class CommandInvoker {
      * Executa todos os comandos na fila.
      */
     public void executeQueue() {
-        this.waiting.forEach((command) -> {
-            executeCommand(command);
+        this.waiting.forEach(new Consumer<ServerCommand>() {
+            @Override
+            public void accept(ServerCommand command) {
+                executeCommand(command);
+            }
         });
         this.waiting.clear();
     }
