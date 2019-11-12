@@ -2,9 +2,12 @@ package br.udesc.ceavi.dsd.chatio.data;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Entidade para representar um contato do sistema.
@@ -18,8 +21,11 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
-    // TODO Criar anotações.
+    @ManyToOne
+    @JoinColumn(name = "user", referencedColumnName = "id", foreignKey = @ForeignKey(name = "none"))
     private ChatUser user;
+    @ManyToOne
+    @JoinColumn(name = "contact", referencedColumnName = "id", foreignKey = @ForeignKey(name = "none"))
     private ChatUser contact;
 
     public long getId() {

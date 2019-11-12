@@ -1,25 +1,39 @@
 package br.udesc.ceavi.dsd.chatio;
 
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommand;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandAddContact;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandAlterUser;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandCreateUser;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandGetContactList;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandRemoveContact;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Lista de mensagens que o cliente/servidor podem trocar.
  * @author Bruno Galeazzi Rech, Jeferson Penz
  */
 public enum MessageList {
     
-    MESSAGE_LOGIN("LOGIN>"),
-    MESSAGE_CONNECTED_STATUS("CONNECTED"),
-    MESSAGE_CREATE_USER("CREATE>"),
-    MESSAGE_ALTER_USER_DATA("ALTER>"),
-    MESSAGE_SUCCESS("SUCCESS"),
-    MESSAGE_ERROR("ERROR>"),
-    MESSAGE_ADD_CONTACT("ADDCONTACT"),
-    MESSAGE_REMOVE_CONTACT("REMOVECONTACT"),
-    MESSAGE_GET_CONTACT_LIST("GETCONTACT"),
-    MESSAGE_DATA("DATA>");
+    MESSAGE_LOGIN("LOGIN>",                  ServerCommandLogin.class),
+    MESSAGE_CONNECTED_STATUS("CONNECTED",    null),
+    MESSAGE_CREATE_USER("CREATE>",           ServerCommandCreateUser.class),
+    MESSAGE_ALTER_USER_DATA("ALTER>",        ServerCommandAlterUser.class),
+    MESSAGE_SUCCESS("SUCCESS",               null),
+    MESSAGE_ERROR("ERROR>",                  null),
+    MESSAGE_ADD_CONTACT("ADDCONTACT>",       ServerCommandAddContact.class),
+    MESSAGE_REMOVE_CONTACT("REMOVECONTACT>", ServerCommandRemoveContact.class),
+    MESSAGE_GET_CONTACT_LIST("GETCONTACT",   ServerCommandGetContactList.class),
+    MESSAGE_DATA("DATA>",                    null);
     
-    private String message;
-    private MessageList(String message){
+    private final String message;
+    private final Class  command;
+    private MessageList(String message, Class command){
         this.message = message;
+        this.command = command;
     }
 
     /**
@@ -29,6 +43,14 @@ public enum MessageList {
     @Override
     public String toString(){
         return this.message;
+    }
+ 
+    /**
+     * Retorna a classe para instanciar o comando.
+     * @return 
+     */
+    public Class getCommandClass(){
+        return this.command;
     }
     
 }

@@ -2,10 +2,12 @@ package br.udesc.ceavi.dsd.chatio.data;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  * Entidade para representar um Usuário do sistema.
@@ -19,10 +21,14 @@ public class ChatUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
-    // TODO Criar anotações.
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "birthdate")
     private Date birthDate;
+    @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "nickname", nullable = false)
     private String nickname;
+    @Column(name = "password", nullable = false)
     private String password;
 
     public long getId() {
