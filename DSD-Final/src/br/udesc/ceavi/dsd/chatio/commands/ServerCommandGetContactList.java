@@ -1,9 +1,9 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
+import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
-import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
-import java.util.List;
+import com.google.gson.Gson;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -14,13 +14,13 @@ import javax.persistence.Persistence;
 public class ServerCommandGetContactList implements ServerCommand {
     
     private ChatUser commandUser;
-    private List<Contact> result;
+    private String result;
 
     @Override
     public void execute() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU-Test");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ContactDao dao = new ContactDao(factory);
-        this.result = dao.findContactEntities(commandUser);
+        this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(dao.findContactEntities(commandUser));
     }
     
     /**
@@ -35,8 +35,14 @@ public class ServerCommandGetContactList implements ServerCommand {
      * Retorna o resultado do comando.
      * @return 
      */
-    public List<Contact> getResult(){
+    @Override
+    public String getResult(){
         return this.result;
+    }
+
+    @Override
+    public void setParams(String params) {
+        
     }
     
 }

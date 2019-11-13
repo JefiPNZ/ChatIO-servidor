@@ -1,8 +1,11 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
+import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
+import com.google.gson.Gson;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
@@ -12,14 +15,25 @@ import javax.persistence.Persistence;
 public class ServerCommandCreateUser implements ServerCommand {
     
     private ChatUser commandUser;
-    private boolean result = false;
+    private String result;
 
     @Override
     public void execute() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU-Test");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
-        dao.create(this.commandUser);
-        this.result = true;
+        ChatUser user;
+        try {
+            user = dao.findChatUserByLogin(this.commandUser.getNickname());
+        } catch(NoResultException ex){
+            user = null;
+        }
+        if(user != null){
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
+        }
+        else {
+            dao.create(this.commandUser);
+            this.result = MessageList.MESSAGE_SUCCESS.toString();
+        }
     }
     
     /**
@@ -34,8 +48,14 @@ public class ServerCommandCreateUser implements ServerCommand {
      * Retorna o resultado do comando.
      * @return 
      */
-    public boolean getResult(){
+    @Override
+    public String getResult(){
         return this.result;
+    }
+
+    @Override
+    public void setParams(String params) {
+        this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
     
 }

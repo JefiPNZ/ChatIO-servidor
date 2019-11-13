@@ -18,13 +18,13 @@ public class ServerCommandLogin implements ServerCommand {
 
     @Override
     public void execute() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU-Test");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
         try {
             dao.findChatUserByLogin(this.login, this.password);
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         } catch (NoResultException ex){
-            this.result = "Nenhum Usuário Encontrado";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Nenhum Usuário Encontrado\"}";
         }
     }
     
@@ -44,6 +44,11 @@ public class ServerCommandLogin implements ServerCommand {
      */
     public String getResult(){
         return this.result;
+    }
+
+    @Override
+    public void setParams(String params) {
+
     }
     
 }

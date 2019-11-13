@@ -1,8 +1,8 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
+import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
-import br.udesc.ceavi.dsd.chatio.data.exceptions.NonexistentEntityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -15,16 +15,17 @@ import javax.persistence.Persistence;
 public class ServerCommandAlterUser implements ServerCommand {
     
     private Contact commandContact;
-    private boolean result = false;
+    private String result;
     
     @Override
     public void execute() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU-Test");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ContactDao dao = new ContactDao(factory);
         try {
             dao.edit(this.commandContact);
-            this.result = true;
+            this.result = MessageList.MESSAGE_SUCCESS.toString();
         } catch (Exception ex) {
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
             Logger.getLogger(ServerCommandAlterUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -41,8 +42,14 @@ public class ServerCommandAlterUser implements ServerCommand {
      * Retorna o resultado do comando.
      * @return 
      */
-    public boolean getResult(){
+    @Override
+    public String getResult(){
         return this.result;
+    }
+
+    @Override
+    public void setParams(String params) {
+
     }
     
 }

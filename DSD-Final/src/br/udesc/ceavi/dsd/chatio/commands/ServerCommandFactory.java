@@ -33,8 +33,10 @@ public class ServerCommandFactory {
             return null;
         }
         try {
-            Constructor constructor = classData.getConstructor();
-            return (ServerCommand) constructor.newInstance(new Object[] {});
+            Constructor constructor       = classData.getConstructor();
+            ServerCommand commandInstance = (ServerCommand) constructor.newInstance(new Object[] {});
+            commandInstance.setParams(param);
+            return commandInstance;
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(MessageList.class.getName()).log(Level.SEVERE, null, ex);
             return null;

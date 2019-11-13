@@ -11,6 +11,16 @@ public interface ServerCommand {
      */
     public void execute();
     
-//    public 
+    /**
+     * Retorna o resultado da execução do comando.
+     * @return 
+     */
+    public String getResult();
+    
+    /**
+     * Define os parâmetros do comando.
+     * @param params 
+     */
+    public void setParams(String params);
     
 }

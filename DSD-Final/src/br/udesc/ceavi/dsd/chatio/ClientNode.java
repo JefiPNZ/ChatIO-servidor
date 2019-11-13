@@ -1,5 +1,6 @@
 package br.udesc.ceavi.dsd.chatio;
 
+import br.udesc.ceavi.dsd.chatio.commands.CommandInvoker;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommand;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandFactory;
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ public class ClientNode implements Runnable {
     private BufferedReader input;
     private PrintWriter output;
     private String ip;
+    private CommandInvoker invoker;
     private ServerCommandFactory factory;
     private boolean connected;
     
@@ -31,6 +33,7 @@ public class ClientNode implements Runnable {
         this.ip        = ip;
         this.factory   = new ServerCommandFactory();
         this.connected = true;
+        this.invoker   = new CommandInvoker();
     }
 
     @Override
@@ -39,12 +42,17 @@ public class ClientNode implements Runnable {
             String message;
             try {
                 message = input.readLine();
-                System.out.println("Comando recebido: " + message);
-                ServerCommand command = this.getCommandFromMessage(message);
-                System.out.println("Criada classe: " + command.toString());
+                if(message != null){
+                    System.out.println("Comando recebido: " + message);
+                    ServerCommand command = this.getCommandFromMessage(message);
+                    invoker.executeCommand(command);
+                    output.println(command.getResult());
+                }
             } catch (IOException ex) {
-                ex.printStackTrace();
+                this.connected = false;
                 break;
+            } catch(Exception ex) {
+                output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getMessage() + "\"}");
             }
         }
     }

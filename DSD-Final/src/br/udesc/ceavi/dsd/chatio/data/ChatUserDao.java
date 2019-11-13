@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 /**
@@ -118,6 +117,10 @@ public class ChatUserDao implements Serializable {
         }
     }
     
+    public ChatUser findChatUserByLogin(String login){
+        return this.findChatUserByLogin(login, null);
+    }
+    
     public ChatUser findChatUserByLogin(String login, String password){
         EntityManager em = getEntityManager();
         try {
@@ -125,8 +128,10 @@ public class ChatUserDao implements Serializable {
             CriteriaQuery cq = cb.createQuery();
             Root<ChatUser> c = cq.from(ChatUser.class);
             cq.select(c)
-              .where(cb.equal(c.get("nickname"), login))
-              .where(cb.equal(c.get("password"), password));
+              .where(cb.equal(c.get("nickname"), login));
+            if(password != null){
+                cq.where(cb.equal(c.get("password"), password));
+            }
             Query q = em.createQuery(cq);
             return (ChatUser) q.getSingleResult();
         } finally {
