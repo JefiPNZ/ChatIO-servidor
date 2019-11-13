@@ -1,16 +1,11 @@
 package br.udesc.ceavi.dsd.chatio;
 
-import br.udesc.ceavi.dsd.chatio.commands.ServerCommand;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandAddContact;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandAlterUser;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandCreateUser;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandGetContactList;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandRemoveContact;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Lista de mensagens que o cliente/servidor podem trocar.
@@ -51,6 +46,15 @@ public enum MessageList {
      */
     public Class getCommandClass(){
         return this.command;
+    }
+
+    public static MessageList fromString(String text) {
+        for (MessageList value : MessageList.values()) {
+            if (value.message.equalsIgnoreCase(text)) {
+                return value;
+            }
+        }
+        return null;
     }
     
 }

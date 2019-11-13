@@ -20,12 +20,14 @@ public class ServerCommandFactory {
      * @return 
      */
     public ServerCommand createCommand(String command){
-        Pattern pattern = Pattern.compile("[A-Z]+>?");
+        Pattern pattern = Pattern.compile("([A-Z]+>?)(.*)");
         Matcher matcher = pattern.matcher(command);
+        String param    = null;
         if (matcher.find()) {
             command = matcher.group(1);
+            param   = matcher.group(2);
         }
-        MessageList message = MessageList.valueOf(command);
+        MessageList message = MessageList.fromString(command);
         Class classData = message.getCommandClass();
         if(classData == null){
             return null;

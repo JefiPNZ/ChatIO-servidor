@@ -26,10 +26,10 @@ public class ClientNode implements Runnable {
      * @param ip     Endereço IP do CLiente.
      */
     public ClientNode(BufferedReader input, PrintWriter output, String ip) {
-        this.input = input;
-        this.output = output;
-        this.ip = ip;
-        this.factory = new ServerCommandFactory();
+        this.input     = input;
+        this.output    = output;
+        this.ip        = ip;
+        this.factory   = new ServerCommandFactory();
         this.connected = true;
     }
 
@@ -52,6 +52,7 @@ public class ClientNode implements Runnable {
     /**
      * Retorna o comando para execução a partir da mensagem.
      * @param message 
+     * @return  
      */
     public ServerCommand getCommandFromMessage(String message){
         return factory.createCommand(message);

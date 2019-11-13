@@ -27,6 +27,8 @@ public class Contact implements Serializable {
     @ManyToOne
     @JoinColumn(name = "contact", referencedColumnName = "id", foreignKey = @ForeignKey(name = "none"))
     private ChatUser contact;
+    
+    private boolean online;
 
     public long getId() {
         return id;
@@ -50,6 +52,14 @@ public class Contact implements Serializable {
 
     public void setContact(ChatUser contact) {
         this.contact = contact;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     @Override
