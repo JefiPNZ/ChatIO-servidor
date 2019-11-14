@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Nodo de um cliente.<br/>
@@ -71,15 +73,15 @@ public class ClientNode implements Runnable {
                     Thread.sleep(100);
                     // Se a conexão expirou, para a thread.
                     if(this.timeoutMiliseconds < System.currentTimeMillis()){
-                        this.connected = false;
+                        this.disconnect();
                     }
                 }
                 catch (InterruptedException ex){
-                    this.connected = false;
+                    this.disconnect();
                     break;
                 }
             } catch (IOException ex) {
-                this.connected = false;
+                this.disconnect();
                 break;
             } catch(Exception ex) {
                 output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getClass().toString() + ":" + ex.getMessage() + "\"}");
@@ -123,6 +125,11 @@ public class ClientNode implements Runnable {
      */
     public void disconnect(){
         this.connected = false;
+        try {
+            this.connection.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientNode.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean isConnected() {
