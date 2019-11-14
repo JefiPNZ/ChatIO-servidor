@@ -96,7 +96,7 @@ public class ChatUserDaoTest {
     
     private long insertTestUser(){
         ChatUser user = new ChatUser();
-        user.setBirthDate(new GregorianCalendar(1999, Calendar.JANUARY, 1).getTime());
+        user.setBirthDate("1999");
         user.setEmail("teste@teste.com");
         user.setNickname("Teste");
         user.setPassword("123456789");

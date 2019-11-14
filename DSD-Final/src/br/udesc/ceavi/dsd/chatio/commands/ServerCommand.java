@@ -18,6 +18,12 @@ public interface ServerCommand {
     public String getResult();
     
     /**
+     * Define quem está executando o comando.
+     * @param executor
+     */
+    public void setExecutor(String executor);
+    
+    /**
      * Define os parâmetros do comando.
      * @param params 
      */

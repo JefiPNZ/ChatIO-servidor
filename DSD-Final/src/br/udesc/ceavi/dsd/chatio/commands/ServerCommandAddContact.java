@@ -1,6 +1,7 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
 import br.udesc.ceavi.dsd.chatio.MessageList;
+import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
 import br.udesc.ceavi.dsd.chatio.data.exceptions.NonexistentEntityException;
@@ -17,13 +18,16 @@ public class ServerCommandAddContact implements ServerCommand {
     
     private Contact commandContact;
     private String result;
+    private String executor;
     
     @Override
     public void execute() {
+        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está adicionando um novo contato.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU-Test");
         ContactDao dao = new ContactDao(factory);
         dao.create(this.commandContact);
         this.result = MessageList.MESSAGE_SUCCESS.toString();
+        factory.close();
     }
     
     /**
@@ -41,6 +45,11 @@ public class ServerCommandAddContact implements ServerCommand {
     @Override
     public String getResult(){
         return this.result;
+    }
+    
+    @Override
+    public void setExecutor(String executor){
+        this.executor = executor;
     }
 
     @Override

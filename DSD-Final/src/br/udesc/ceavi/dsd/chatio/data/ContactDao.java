@@ -92,6 +92,7 @@ public class ContactDao implements Serializable {
         return findContactEntities(false, maxResults, firstResult);
     }
 
+    @SuppressWarnings("unchecked")
     private List<Contact> findContactEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -108,6 +109,7 @@ public class ContactDao implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<Contact> findContactEntities(ChatUser user) {
         EntityManager em = getEntityManager();
         try {
@@ -132,6 +134,7 @@ public class ContactDao implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public int getContactCount() {
         EntityManager em = getEntityManager();
         try {

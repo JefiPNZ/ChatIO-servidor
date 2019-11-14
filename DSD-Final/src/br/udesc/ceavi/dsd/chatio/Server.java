@@ -26,6 +26,9 @@ public class Server {
     
     public static final int SERVER_CONNECTION_PORT = 56000;
     
+    // Token utilizado para os comandos de testes.
+    public static final String TEST_UNIQUE_TOKEN = "7f77d5c2b5667c7b2302a6ce8dd5f000";
+    
     private static Server instance;
     /**
      * Retorna a instância do servidor ou cria uma nova caso não exista.
@@ -40,7 +43,7 @@ public class Server {
     
     private Server(){
         super();
-        this.clients = new ArrayList<ClientNode>();
+        this.clients = new ArrayList<>();
         try {
             this.socket = new ServerSocket(SERVER_CONNECTION_PORT);
             this.socket.setReuseAddress(true);
@@ -76,7 +79,49 @@ public class Server {
         }
     }
     
+    /**
+     * Busca o cliente com o login informado.
+     * @param login 
+     * @return  
+     */
+    public ClientNode findClientConnectionByLogin(String login){
+        for (ClientNode client : this.clients) {
+            if(client.getLogin() != null && client.getLogin().equals(login)){
+                return client;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Busca o cliente com o ip informado.
+     * @param ip
+     * @return 
+     */
+    public ClientNode findClientConnectionByIp(String ip){
+        for (ClientNode client : this.clients) {
+            if(client.getIp().equals(ip)){
+                return client;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Notifica uma mensagem para o Usuário.
+     * @param message 
+     */
+    public void notifyMessageForUser(String message){
+        System.out.println(message);
+    }
+    
     public void initClient(PrintWriter out, BufferedReader in, String ip){
+        if(this.findClientConnectionByIp(ip) != null){
+            this.notifyMessageForUser("Usuário já conectado do ip" + ip);
+        }
+        else {
+            this.notifyMessageForUser("Usuário conectou do ip " + ip);
+        }
         ClientNode node = new ClientNode(in, out, ip);
         this.clients.add(node);
         new Thread(node).start();

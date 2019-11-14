@@ -1,6 +1,7 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
 import br.udesc.ceavi.dsd.chatio.MessageList;
+import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
 import br.udesc.ceavi.dsd.chatio.data.exceptions.NonexistentEntityException;
@@ -17,9 +18,11 @@ public class ServerCommandRemoveContact implements ServerCommand {
     
     private Contact commandContact;
     private String result;
+    private String executor;
     
     @Override
     public void execute() {
+        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está removendo o contato de id " + commandContact.getId() + ".");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ContactDao dao = new ContactDao(factory);
         try {
@@ -28,6 +31,9 @@ public class ServerCommandRemoveContact implements ServerCommand {
         } catch (NonexistentEntityException ex) {
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
             Logger.getLogger(ServerCommandRemoveContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            factory.close();
         }
     }
     
@@ -42,6 +48,11 @@ public class ServerCommandRemoveContact implements ServerCommand {
     @Override
     public String getResult(){
         return this.result;
+    }
+    
+    @Override
+    public void setExecutor(String executor){
+        this.executor = executor;
     }
 
     @Override

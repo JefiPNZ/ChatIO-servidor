@@ -11,7 +11,7 @@
     <description>Builds, tests, and runs the project DSD-Final.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <property name="cobertura.dir" value="C:/users/jefip/Downloads/cobertura" />
+<!--    <property name="cobertura.dir" value="C:/users/jefip/Downloads/cobertura" />
 
     <path id="cobertura.classpath">
         <fileset dir="${cobertura.dir}">
@@ -43,5 +43,5 @@
                                   destdir="${build.report.cobertura.dir}"/>
         <cobertura-report format="xml" srcdir="${src.dir}"
                                   destdir="${build.report.cobertura.dir}"/>
-    </target>
+    </target>-->
 </project>

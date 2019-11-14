@@ -21,9 +21,8 @@ public class ChatUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "birthdate")
-    private Date birthDate;
+    private String birthDate;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "nickname", nullable = false)
@@ -39,11 +38,11 @@ public class ChatUser implements Serializable {
         this.id = id;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

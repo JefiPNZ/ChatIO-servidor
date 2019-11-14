@@ -33,6 +33,7 @@ public class ServerCommandFactory {
             return null;
         }
         try {
+            @SuppressWarnings("unchecked")
             Constructor constructor       = classData.getConstructor();
             ServerCommand commandInstance = (ServerCommand) constructor.newInstance(new Object[] {});
             commandInstance.setParams(param);

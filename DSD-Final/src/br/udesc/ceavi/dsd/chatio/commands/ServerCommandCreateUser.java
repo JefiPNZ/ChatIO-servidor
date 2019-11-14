@@ -1,6 +1,7 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
 import br.udesc.ceavi.dsd.chatio.MessageList;
+import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
 import com.google.gson.Gson;
@@ -16,9 +17,11 @@ public class ServerCommandCreateUser implements ServerCommand {
     
     private ChatUser commandUser;
     private String result;
+    private String executor;
 
     @Override
     public void execute() {
+        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está criando um novo contato.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
         ChatUser user;
@@ -34,6 +37,7 @@ public class ServerCommandCreateUser implements ServerCommand {
             dao.create(this.commandUser);
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         }
+        factory.close();
     }
     
     /**
@@ -51,6 +55,11 @@ public class ServerCommandCreateUser implements ServerCommand {
     @Override
     public String getResult(){
         return this.result;
+    }
+    
+    @Override
+    public void setExecutor(String executor){
+        this.executor = executor;
     }
 
     @Override

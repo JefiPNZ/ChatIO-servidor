@@ -4,6 +4,7 @@ import br.udesc.ceavi.dsd.chatio.commands.CommandInvoker;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommand;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandFactory;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -19,6 +20,8 @@ public class ClientNode implements Runnable {
     private String ip;
     private CommandInvoker invoker;
     private ServerCommandFactory factory;
+    private String  login;
+    private long    timeoutMiliseconds;
     private boolean connected;
     
     /**
@@ -41,20 +44,45 @@ public class ClientNode implements Runnable {
         while (this.connected) {
             String message;
             try {
-                message = input.readLine();
-                if(message != null){
-                    System.out.println("Comando recebido: " + message);
-                    ServerCommand command = this.getCommandFromMessage(message);
-                    invoker.executeCommand(command);
-                    output.println(command.getResult());
+                if(input.ready()) {
+                    message = input.readLine();
+                    if(message != null){
+                        System.out.println("Comando recebido: " + message);
+                        ServerCommand command = this.getCommandFromMessage(message);
+                        if(command != null){
+                            invoker.executeCommand(command);
+                            output.println(command.getResult());
+                        }
+                        else {
+                            output.println(MessageList.MESSAGE_ERROR + "{\"message\":\"Comando Desconhecido\"}");
+                        }
+                    }
+                }
+                try {
+                    Thread.sleep(100);
+                    // Se a conexão expirou, para a thread.
+                    if(this.timeoutMiliseconds > System.currentTimeMillis()){
+                        this.connected = false;
+                    }
+                }
+                catch (InterruptedException ex){
+                    this.connected = false;
+                    break;
                 }
             } catch (IOException ex) {
                 this.connected = false;
                 break;
             } catch(Exception ex) {
-                output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getMessage() + "\"}");
+                output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getClass().toString() + ":" + ex.getMessage() + "\"}");
             }
         }
+    }
+    
+    /**
+     * Notifica que o cliente esta conectado.
+     */
+    public void notifyConnected(){
+        this.timeoutMiliseconds = System.currentTimeMillis() + 30 * 1000; // Sessão expira depois de 30 sec sem resposta.
     }
     
     /**
@@ -63,7 +91,18 @@ public class ClientNode implements Runnable {
      * @return  
      */
     public ServerCommand getCommandFromMessage(String message){
-        return factory.createCommand(message);
+        if(message.equals("CLEAR>" + Server.TEST_UNIQUE_TOKEN)){
+            // Comando específico para limpar a base para testes.
+            Server.getInstance().notifyMessageForUser("Limpando arquivo da base de testes.");
+            File dbFile  = new File("server.db");
+            if(dbFile.exists()){
+                dbFile.delete();
+            }
+            return null;
+        }
+        else {
+            return factory.createCommand(message);
+        }
     }
     
     /**
@@ -71,6 +110,18 @@ public class ClientNode implements Runnable {
      */
     public void disconnect(){
         this.connected = false;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
     
 }

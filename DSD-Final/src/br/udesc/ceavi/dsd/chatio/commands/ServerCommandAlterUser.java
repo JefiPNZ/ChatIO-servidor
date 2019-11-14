@@ -1,11 +1,15 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
 import br.udesc.ceavi.dsd.chatio.MessageList;
+import br.udesc.ceavi.dsd.chatio.Server;
+import br.udesc.ceavi.dsd.chatio.data.ChatUser;
+import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
 import br.udesc.ceavi.dsd.chatio.data.Contact;
-import br.udesc.ceavi.dsd.chatio.data.ContactDao;
+import com.google.gson.Gson;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
@@ -14,28 +18,55 @@ import javax.persistence.Persistence;
  */
 public class ServerCommandAlterUser implements ServerCommand {
     
-    private Contact commandContact;
+    private ChatUser commandUser;
     private String result;
+    private String executor;
     
     @Override
     public void execute() {
+        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está alterando os dados do Usuário.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
-        ContactDao dao = new ContactDao(factory);
+        ChatUserDao dao = new ChatUserDao(factory);
+        
+        ChatUser user;
         try {
-            dao.edit(this.commandContact);
-            this.result = MessageList.MESSAGE_SUCCESS.toString();
-        } catch (Exception ex) {
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
-            Logger.getLogger(ServerCommandAlterUser.class.getName()).log(Level.SEVERE, null, ex);
+            user = dao.findChatUserByLogin(this.executor);
+        } catch(NoResultException ex){
+            user = null;
         }
+        if(user == null){
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
+        }
+        else {
+            if(this.commandUser.getBirthDate() != null){
+                user.setBirthDate(this.commandUser.getBirthDate());
+            }
+            if(this.commandUser.getEmail() != null){
+                user.setEmail(this.commandUser.getEmail());
+            }
+            if(this.commandUser.getPassword() != null){
+                user.setPassword(this.commandUser.getPassword());
+            }
+            if(this.commandUser.getNickname()!= null){
+                user.setNickname(this.commandUser.getPassword());
+            }
+            try {
+                dao.edit(user);
+                this.result = MessageList.MESSAGE_SUCCESS.toString();
+            } catch (Exception ex) {
+                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
+                Logger.getLogger(ServerCommandAlterUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        factory.close();
     }
     
     /**
      * Define o contato para inserção.
-     * @param contact 
+     * @param user 
      */
-    public void setContact(Contact contact){
-        this.commandContact = contact;
+    public void setUser(ChatUser user){
+        this.commandUser = user;
     }
     
     /**
@@ -46,10 +77,15 @@ public class ServerCommandAlterUser implements ServerCommand {
     public String getResult(){
         return this.result;
     }
+    
+    @Override
+    public void setExecutor(String executor){
+        this.executor = executor;
+    }
 
     @Override
     public void setParams(String params) {
-
+        this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
     
 }

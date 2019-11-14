@@ -92,6 +92,7 @@ public class ChatUserDao implements Serializable {
         return findChatUserEntities(false, maxResults, firstResult);
     }
 
+    @SuppressWarnings("unchecked")
     private List<ChatUser> findChatUserEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -121,6 +122,7 @@ public class ChatUserDao implements Serializable {
         return this.findChatUserByLogin(login, null);
     }
     
+    @SuppressWarnings("unchecked")
     public ChatUser findChatUserByLogin(String login, String password){
         EntityManager em = getEntityManager();
         try {
@@ -139,6 +141,7 @@ public class ChatUserDao implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public int getChatUserCount() {
         EntityManager em = getEntityManager();
         try {
