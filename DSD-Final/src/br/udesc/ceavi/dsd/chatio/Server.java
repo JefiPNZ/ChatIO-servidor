@@ -67,12 +67,11 @@ public class Server {
     private void listen() {
         while(true){
             try {
-                System.out.println("Aguardando conexão na porta " + this.socket.getLocalPort());
+                this.notifyMessageForUser("Aguardando conexão na porta " + this.socket.getLocalPort());
                 Socket         connection = this.socket.accept();
-                System.out.println("Conectado!");
                 PrintWriter    out        = new PrintWriter(connection.getOutputStream(), true);
                 BufferedReader in         = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                this.initClient(out, in, connection.getInetAddress().getHostAddress() + ":" + connection.getPort());
+                this.initClient(connection, out, in, connection.getInetAddress().getHostAddress() + ":" + connection.getPort());
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -115,16 +114,21 @@ public class Server {
         System.out.println(message);
     }
     
-    public void initClient(PrintWriter out, BufferedReader in, String ip){
+    public void initClient(Socket connection, PrintWriter out, BufferedReader in, String ip){
         if(this.findClientConnectionByIp(ip) != null){
             this.notifyMessageForUser("Usuário já conectado do ip" + ip);
         }
         else {
             this.notifyMessageForUser("Usuário conectou do ip " + ip);
         }
-        ClientNode node = new ClientNode(in, out, ip);
+        ClientNode node = new ClientNode(connection, in, out, ip);
         this.clients.add(node);
         new Thread(node).start();
+    }
+    
+    public void notifyClientDisconected(ClientNode client){
+        this.notifyMessageForUser("Usuário de ip " + client.getIp() + " foi desconectado...");
+        this.clients.remove(client);
     }
     
 }

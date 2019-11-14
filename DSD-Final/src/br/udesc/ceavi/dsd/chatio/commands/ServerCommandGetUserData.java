@@ -13,39 +13,25 @@ import javax.persistence.Persistence;
  * Comando para criar um Usuário.
  * @author Bruno Galeazzi Rech, Jeferson Penz
  */
-public class ServerCommandCreateUser implements ServerCommand {
+public class ServerCommandGetUserData implements ServerCommand {
     
-    private ChatUser commandUser;
     private String result;
     private String executor;
 
     @Override
     public void execute() {
-        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está criando um novo usuário.");
+        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está buscando seus dados.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
-        ChatUser user;
         try {
-            user = dao.findChatUserByLogin(this.commandUser.getNickname());
+            ChatUser user = dao.findChatUserByLogin(this.executor);
+            this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(user, ChatUser.class);
         } catch(NoResultException ex){
-            user = null;
-        }
-        if(user != null){
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
         }
-        else {
-            dao.create(this.commandUser);
-            this.result = MessageList.MESSAGE_SUCCESS.toString();
+        finally {
+            factory.close();
         }
-        factory.close();
-    }
-    
-    /**
-     * Define o Usuário para executar o comando.
-     * @param user 
-     */
-    public void setUser(ChatUser user){
-        this.commandUser = user;
     }
     
     /**
@@ -63,8 +49,6 @@ public class ServerCommandCreateUser implements ServerCommand {
     }
 
     @Override
-    public void setParams(String params) {
-        this.setUser(new Gson().fromJson(params, ChatUser.class));
-    }
+    public void setParams(String params) {}
     
 }

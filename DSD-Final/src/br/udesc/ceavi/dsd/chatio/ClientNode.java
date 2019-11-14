@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  * Nodo de um cliente.<br/>
@@ -15,14 +16,15 @@ import java.io.PrintWriter;
  */
 public class ClientNode implements Runnable {
     
-    private BufferedReader input;
-    private PrintWriter output;
-    private String ip;
-    private CommandInvoker invoker;
+    private final BufferedReader input;
+    private final PrintWriter    output;
+    private final Socket         connection;
+    private String               ip;
+    private CommandInvoker       invoker;
     private ServerCommandFactory factory;
-    private String  login;
-    private long    timeoutMiliseconds;
-    private boolean connected;
+    private String               login;
+    private long                 timeoutMiliseconds;
+    private boolean              connected;
     
     /**
      * Cria um novo cliente para se comunicar através do IP informado.
@@ -30,13 +32,16 @@ public class ClientNode implements Runnable {
      * @param output Objeto para envio de dados para o cliente.
      * @param ip     Endereço IP do CLiente.
      */
-    public ClientNode(BufferedReader input, PrintWriter output, String ip) {
-        this.input     = input;
-        this.output    = output;
-        this.ip        = ip;
-        this.factory   = new ServerCommandFactory();
-        this.connected = true;
-        this.invoker   = new CommandInvoker();
+    public ClientNode(Socket connection, BufferedReader input, PrintWriter output, String ip) {
+        this.timeoutMiliseconds = 0;
+        this.connection = connection;
+        this.input      = input;
+        this.output     = output;
+        this.ip         = ip;
+        this.factory    = new ServerCommandFactory();
+        this.connected  = true;
+        this.invoker    = new CommandInvoker();
+        this.notifyConnected();
     }
 
     @Override
@@ -44,24 +49,28 @@ public class ClientNode implements Runnable {
         while (this.connected) {
             String message;
             try {
-                if(input.ready()) {
+                if(connection.isConnected() && input.ready()) {
                     message = input.readLine();
                     if(message != null){
-                        System.out.println("Comando recebido: " + message);
+                        Server.getInstance().notifyMessageForUser("Comando recebido: " + message + " de " + this.ip);
                         ServerCommand command = this.getCommandFromMessage(message);
                         if(command != null){
+                            command.setExecutor(this.login != null ? this.login : this.ip);
                             invoker.executeCommand(command);
+                            Server.getInstance().notifyMessageForUser("Retorno do comando do Usuário " + (this.login != null ? this.login : this.ip) + ": " + command.getResult());
                             output.println(command.getResult());
                         }
                         else {
+                            Server.getInstance().notifyMessageForUser("Comando desconhecido: " + message);
                             output.println(MessageList.MESSAGE_ERROR + "{\"message\":\"Comando Desconhecido\"}");
                         }
+                        this.notifyConnected();
                     }
                 }
                 try {
                     Thread.sleep(100);
                     // Se a conexão expirou, para a thread.
-                    if(this.timeoutMiliseconds > System.currentTimeMillis()){
+                    if(this.timeoutMiliseconds < System.currentTimeMillis()){
                         this.connected = false;
                     }
                 }
@@ -76,13 +85,14 @@ public class ClientNode implements Runnable {
                 output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getClass().toString() + ":" + ex.getMessage() + "\"}");
             }
         }
+        Server.getInstance().notifyClientDisconected(this);
     }
     
     /**
      * Notifica que o cliente esta conectado.
      */
     public void notifyConnected(){
-        this.timeoutMiliseconds = System.currentTimeMillis() + 30 * 1000; // Sessão expira depois de 30 sec sem resposta.
+        this.timeoutMiliseconds = System.currentTimeMillis() + 10 * 1000; // Sessão expira depois de 10 sec sem resposta.
     }
     
     /**
@@ -97,6 +107,9 @@ public class ClientNode implements Runnable {
             File dbFile  = new File("server.db");
             if(dbFile.exists()){
                 dbFile.delete();
+                if(dbFile.exists()){
+                    Server.getInstance().notifyMessageForUser("Não foi possivel remover o arquivo de banco de dados.");
+                }
             }
             return null;
         }
@@ -110,6 +123,10 @@ public class ClientNode implements Runnable {
      */
     public void disconnect(){
         this.connected = false;
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 
     public String getIp() {

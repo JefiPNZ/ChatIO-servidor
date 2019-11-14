@@ -1,0 +1,246 @@
+2019-11-13 22:54:41,705 INFO o.h.j.i.u.LogHelper [Thread-0] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:54:41,799 INFO o.h.Version [Thread-0] HHH000412: Hibernate Core {5.4.8.Final}
+2019-11-13 22:54:41,908 INFO o.h.a.c.Version [Thread-0] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-13 22:54:41,970 INFO o.h.d.Dialect [Thread-0] HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
+2019-11-13 22:54:42,080 WARN o.h.o.c.pooling [Thread-0] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:54:42,080 INFO o.h.o.c.pooling [Thread-0] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:54:42,080 INFO o.h.o.c.pooling [Thread-0] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:54:42,345 INFO o.h.o.c.pooling [Thread-0] HHH10001003: Autocommit mode: false
+2019-11-13 22:54:42,345 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-0] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:54:43,095 INFO o.h.o.c.access [Thread-0] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6c332b55] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:54:43,142 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-0] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:54:43,423 INFO o.h.o.c.pooling [Thread-0] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]
+2019-11-13 22:54:43,533 INFO o.h.j.i.u.LogHelper [Thread-0] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:54:43,564 WARN o.h.o.c.pooling [Thread-0] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:54:43,564 INFO o.h.o.c.pooling [Thread-0] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:54:43,564 INFO o.h.o.c.pooling [Thread-0] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:54:43,564 INFO o.h.o.c.pooling [Thread-0] HHH10001003: Autocommit mode: false
+2019-11-13 22:54:43,564 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-0] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:54:43,658 INFO o.h.o.c.access [Thread-0] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@59ad848a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:54:43,658 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table ChatUser (id bigint not null, birthdate varchar(255), email varchar(255) not null, nickname varchar(255) not null, password varchar(255) not null, primary key (id))" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table ChatUser (id bigint not null, birthdate varchar(255), email varchar(255) not null, nickname varchar(255) not null, password varchar(255) not null, primary key (id))" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table ChatUser already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:54:43,673 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table Contact (id bigint not null, online boolean not null, contact bigint, user bigint, primary key (id))" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table Contact (id bigint not null, online boolean not null, contact bigint, user bigint, primary key (id))" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table Contact already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:54:43,673 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table hibernate_sequence (next_val bigint)" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table hibernate_sequence (next_val bigint)" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table hibernate_sequence already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:54:43,861 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-0] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:54:43,876 INFO o.h.o.c.pooling [Thread-0] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]
+2019-11-13 22:54:44,001 INFO o.h.j.i.u.LogHelper [Thread-4] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:54:44,032 WARN o.h.o.c.pooling [Thread-4] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:54:44,032 INFO o.h.o.c.pooling [Thread-4] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:54:44,032 INFO o.h.o.c.pooling [Thread-4] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:54:44,032 INFO o.h.o.c.pooling [Thread-4] HHH10001003: Autocommit mode: false
+2019-11-13 22:54:44,032 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-4] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:54:44,079 INFO o.h.o.c.access [Thread-4] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@445995aa] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:54:44,157 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-4] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:54:44,173 INFO o.h.o.c.pooling [Thread-4] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]
+2019-11-13 22:55:36,526 INFO o.h.j.i.u.LogHelper [Thread-0] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:55:36,651 INFO o.h.Version [Thread-0] HHH000412: Hibernate Core {5.4.8.Final}
+2019-11-13 22:55:36,821 INFO o.h.a.c.Version [Thread-0] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-13 22:55:36,915 INFO o.h.d.Dialect [Thread-0] HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
+2019-11-13 22:55:37,040 WARN o.h.o.c.pooling [Thread-0] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:55:37,040 INFO o.h.o.c.pooling [Thread-0] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:55:37,040 INFO o.h.o.c.pooling [Thread-0] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:55:37,040 INFO o.h.o.c.pooling [Thread-0] HHH10001003: Autocommit mode: false
+2019-11-13 22:55:37,056 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-0] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:55:37,727 INFO o.h.o.c.access [Thread-0] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6c332b55] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:55:37,774 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-0] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:55:38,009 INFO o.h.o.c.pooling [Thread-0] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]
+2019-11-13 22:55:38,134 INFO o.h.j.i.u.LogHelper [Thread-0] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:55:38,165 WARN o.h.o.c.pooling [Thread-0] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:55:38,165 INFO o.h.o.c.pooling [Thread-0] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:55:38,165 INFO o.h.o.c.pooling [Thread-0] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:55:38,165 INFO o.h.o.c.pooling [Thread-0] HHH10001003: Autocommit mode: false
+2019-11-13 22:55:38,165 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-0] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:55:38,212 INFO o.h.o.c.access [Thread-0] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@59ad848a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:55:38,212 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table ChatUser (id bigint not null, birthdate varchar(255), email varchar(255) not null, nickname varchar(255) not null, password varchar(255) not null, primary key (id))" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table ChatUser (id bigint not null, birthdate varchar(255), email varchar(255) not null, nickname varchar(255) not null, password varchar(255) not null, primary key (id))" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table ChatUser already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:55:38,212 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table Contact (id bigint not null, online boolean not null, contact bigint, user bigint, primary key (id))" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table Contact (id bigint not null, online boolean not null, contact bigint, user bigint, primary key (id))" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table Contact already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:55:38,212 WARN o.h.t.s.i.ExceptionHandlerLoggedImpl [Thread-0] GenerationTarget encountered exception accepting command : Error executing DDL "create table hibernate_sequence (next_val bigint)" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table hibernate_sequence (next_val bigint)" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlString(SchemaCreatorImpl.java:439) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applySqlStrings(SchemaCreatorImpl.java:423) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:314) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:166) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:135) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:121) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:130) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:320) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:462) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1249) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56) [hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79) [javax.persistence-api-2.2.jar:2.2]
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54) [javax.persistence-api-2.2.jar:2.2]
+	at br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin.execute(ServerCommandLogin.java:34) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.commands.CommandInvoker.executeCommand(CommandInvoker.java:37) [classes/:?]
+	at br.udesc.ceavi.dsd.chatio.ClientNode.run(ClientNode.java:54) [classes/:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table hibernate_sequence already exists)
+	at org.sqlite.core.DB.newSQLException(DB.java:941) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.newSQLException(DB.java:953) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.throwex(DB.java:918) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:134) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.core.DB.prepare(DB.java:257) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.sqlite.jdbc3.JDBC3Statement.execute(JDBC3Statement.java:52) ~[sqlite-jdbc-3.27.2.1.jar:?]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	... 18 more
+2019-11-13 22:55:38,252 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-0] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:55:38,268 INFO o.h.o.c.pooling [Thread-0] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]
+2019-11-13 22:55:38,393 INFO o.h.j.i.u.LogHelper [Thread-4] HHH000204: Processing PersistenceUnitInfo [name: DSD-FinalPU]
+2019-11-13 22:55:38,424 WARN o.h.o.c.pooling [Thread-4] HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-13 22:55:38,424 INFO o.h.o.c.pooling [Thread-4] HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:server.db]
+2019-11-13 22:55:38,424 INFO o.h.o.c.pooling [Thread-4] HHH10001001: Connection properties: {user=, password=****}
+2019-11-13 22:55:38,424 INFO o.h.o.c.pooling [Thread-4] HHH10001003: Autocommit mode: false
+2019-11-13 22:55:38,424 INFO o.h.e.j.c.i.DriverManagerConnectionProviderImpl [Thread-4] HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-13 22:55:38,471 INFO o.h.o.c.access [Thread-4] HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6b2923a0] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2019-11-13 22:55:38,518 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [Thread-4] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-13 22:55:38,549 INFO o.h.o.c.pooling [Thread-4] HHH10001008: Cleaning up connection pool [jdbc:sqlite:server.db]

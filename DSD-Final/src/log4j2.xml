@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn">
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%m%n"/>
+    </Console>
+    <File name="FILE" fileName="logs/myLog.log">
+      <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+      </PatternLayout>
+    </File>
+  </Appenders>
+  <Loggers>
+    <LOGGER name="org.hibernate" level="OFF">
+    </LOGGER>
+    <Root level="INFO">
+      <AppenderRef ref="FILE" level="INFO"/>
+      <AppenderRef ref="STDOUT" level="ERROR"/>
+    </Root>
+  </Loggers>
+</Configuration>
