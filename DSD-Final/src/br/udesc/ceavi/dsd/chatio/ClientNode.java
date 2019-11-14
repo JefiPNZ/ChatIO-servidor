@@ -54,19 +54,24 @@ public class ClientNode implements Runnable {
                 if(connection.isConnected() && input.ready()) {
                     message = input.readLine();
                     if(message != null){
-                        Server.getInstance().notifyMessageForUser("Comando recebido: " + message + " de " + this.ip);
-                        ServerCommand command = this.getCommandFromMessage(message);
-                        if(command != null){
-                            command.setExecutor(this.login != null ? this.login : this.ip);
-                            invoker.executeCommand(command);
-                            Server.getInstance().notifyMessageForUser("Retorno do comando do Usuário " + (this.login != null ? this.login : this.ip) + ": " + command.getResult());
-                            output.println(command.getResult());
+                        this.notifyConnected();
+                        if(message.equals(MessageList.MESSAGE_CONNECTED_STATUS.toString())){
+                            output.println(MessageList.MESSAGE_SUCCESS);
                         }
                         else {
-                            Server.getInstance().notifyMessageForUser("Comando desconhecido: " + message);
-                            output.println(MessageList.MESSAGE_ERROR + "{\"message\":\"Comando Desconhecido\"}");
+                            Server.getInstance().notifyMessageForUser("Comando recebido: " + message + " de " + this.ip);
+                            ServerCommand command = this.getCommandFromMessage(message);
+                            if(command != null){
+                                command.setExecutor(this.login != null ? this.login : this.ip);
+                                invoker.executeCommand(command);
+                                Server.getInstance().notifyMessageForUser("Retorno do comando do Usuário " + (this.login != null ? this.login : this.ip) + ": " + command.getResult());
+                                output.println(command.getResult());
+                            }
+                            else {
+                                Server.getInstance().notifyMessageForUser("Comando desconhecido: " + message);
+                                output.println(MessageList.MESSAGE_ERROR + "{\"message\":\"Comando Desconhecido\"}");
+                            }
                         }
-                        this.notifyConnected();
                     }
                 }
                 try {

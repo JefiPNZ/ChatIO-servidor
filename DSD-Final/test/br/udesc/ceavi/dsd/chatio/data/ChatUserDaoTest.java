@@ -1,8 +1,6 @@
 package br.udesc.ceavi.dsd.chatio.data;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;

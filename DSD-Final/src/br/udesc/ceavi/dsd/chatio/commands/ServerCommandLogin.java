@@ -5,7 +5,6 @@ import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javax.persistence.EntityManagerFactory;
@@ -33,11 +32,17 @@ public class ServerCommandLogin implements ServerCommand {
         }
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
+        dao.findChatUserEntities();
         try {
             ChatUser user = dao.findChatUserByLogin(this.login, this.password);
             ClientNode client = server.findClientConnectionByIp(this.executor);
-            client.setLogin(user.getNickname());
-            this.result = MessageList.MESSAGE_SUCCESS.toString();
+            if(client == null){
+                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Cliente já está logado...\"}";
+            }
+            else {
+                client.setLogin(user.getNickname());
+                this.result = MessageList.MESSAGE_SUCCESS.toString();
+            }
         } catch (NoResultException ex){
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Nenhum Usuário Encontrado\"}";
         }

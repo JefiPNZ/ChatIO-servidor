@@ -116,10 +116,30 @@ public class ContactDao implements Serializable {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<Contact> c = cq.from(Contact.class);
-            cq.select(c).where(cb.equal(c.get("user"), user.getId()));
+            cq.select(c)
+              .where(cb.or(cb.equal(c.get("user"), user.getId()),
+                           cb.equal(c.get("contact"), user.getId())));
             
             Query q = em.createQuery(cq);
             return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Contact findContactEntity(ChatUser user, ChatUser contact) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Contact> c = cq.from(Contact.class);
+            cq.select(c)
+              .where(cb.equal(c.get("user"), user.getId()))
+              .where(cb.equal(c.get("contact"), contact.getId()));
+            
+            Query q = em.createQuery(cq);
+            return (Contact) q.getSingleResult();
         } finally {
             em.close();
         }

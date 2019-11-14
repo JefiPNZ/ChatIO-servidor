@@ -3,6 +3,7 @@ package br.udesc.ceavi.dsd.chatio.commands;
 import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
+import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
 import com.google.gson.Gson;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +15,6 @@ import javax.persistence.Persistence;
  */
 public class ServerCommandGetContactList implements ServerCommand {
     
-    private ChatUser commandUser;
     private String result;
     private String executor;
 
@@ -22,23 +22,13 @@ public class ServerCommandGetContactList implements ServerCommand {
     public void execute() {
         Server.getInstance().notifyMessageForUser("Usuário " + executor + " está solicitando a lista de contatos.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
-        ContactDao dao = new ContactDao(factory);
-        this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(dao.findContactEntities(commandUser));
+        ContactDao  dao     = new ContactDao(factory);
+        ChatUserDao userDao = new ChatUserDao(factory);
+        ChatUser    user    = userDao.findChatUserByLogin(this.executor);
+        this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(dao.findContactEntities(user));
         factory.close();
     }
     
-    /**
-     * Define o Usuário para buscar a lista.
-     * @param user 
-     */
-    public void setUser(ChatUser user){
-        this.commandUser = user;
-    }
-    
-    /**
-     * Retorna o resultado do comando.
-     * @return 
-     */
     @Override
     public String getResult(){
         return this.result;
@@ -48,10 +38,8 @@ public class ServerCommandGetContactList implements ServerCommand {
     public void setExecutor(String executor){
         this.executor = executor;
     }
-
+    
     @Override
-    public void setParams(String params) {
-        
-    }
+    public void setParams(String params) {}
     
 }
