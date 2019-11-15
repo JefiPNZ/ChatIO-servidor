@@ -76,10 +76,10 @@ public class ClientNode implements Runnable {
                 }
                 try {
                     Thread.sleep(100);
-                    // Se a conexão expirou, para a thread.
-//                    if(this.timeoutMiliseconds < System.currentTimeMillis()){
-//                        this.disconnect();
-//                    }
+//                     Se a conexão expirou, para a thread.
+                    if(this.timeoutMiliseconds < System.currentTimeMillis()){
+                        this.disconnect();
+                    }
                 }
                 catch (InterruptedException ex){
                     this.disconnect();

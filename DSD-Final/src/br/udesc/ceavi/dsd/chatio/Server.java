@@ -1,6 +1,5 @@
 package br.udesc.ceavi.dsd.chatio;
 
-import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
 import br.udesc.ceavi.dsd.chatio.data.Contact;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  * Classe principal do servidor.<br/>
