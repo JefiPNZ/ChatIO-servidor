@@ -8,6 +8,7 @@ import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
 import br.udesc.ceavi.dsd.chatio.data.exceptions.NonexistentEntityException;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.logging.Level;
@@ -72,7 +73,9 @@ public class ServerCommandRemoveContact implements ServerCommand {
     @Override
     public void setParams(String params) {
         JsonObject jsonObject = JsonParser.parseString(params).getAsJsonObject();
-        this.setUser(jsonObject.get("nickname").getAsString());
+        JsonElement nicknameObj = jsonObject.get("nickname");
+        String nicknameVal = nicknameObj != null ? nicknameObj.getAsString() : "";
+        this.setUser(nicknameVal);
     }
     
 }

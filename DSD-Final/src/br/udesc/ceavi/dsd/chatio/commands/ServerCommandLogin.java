@@ -5,6 +5,7 @@ import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javax.persistence.EntityManagerFactory;
@@ -78,7 +79,11 @@ public class ServerCommandLogin implements ServerCommand {
     @Override
     public void setParams(String params) {
         JsonObject jsonObject = JsonParser.parseString(params).getAsJsonObject();
-        this.setLogin(jsonObject.get("nickname").getAsString(), jsonObject.get("password").getAsString());
+        JsonElement nicknameObj = jsonObject.get("nickname");
+        String nicknameVal = nicknameObj != null ? nicknameObj.getAsString() : "";
+        JsonElement passwordObj = jsonObject.get("password");
+        String passwordVal = passwordObj != null ? passwordObj.getAsString() : "";
+        this.setLogin(nicknameVal, passwordVal);
     }
     
 }

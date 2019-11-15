@@ -77,9 +77,9 @@ public class ClientNode implements Runnable {
                 try {
                     Thread.sleep(100);
                     // Se a conexão expirou, para a thread.
-                    if(this.timeoutMiliseconds < System.currentTimeMillis()){
-                        this.disconnect();
-                    }
+//                    if(this.timeoutMiliseconds < System.currentTimeMillis()){
+//                        this.disconnect();
+//                    }
                 }
                 catch (InterruptedException ex){
                     this.disconnect();
@@ -99,7 +99,7 @@ public class ClientNode implements Runnable {
      * Notifica que o cliente esta conectado.
      */
     public void notifyConnected(){
-        this.timeoutMiliseconds = System.currentTimeMillis() + 10 * 1000; // Sessão expira depois de 10 sec sem resposta.
+        this.timeoutMiliseconds = System.currentTimeMillis() + 10000; // Sessão expira depois de 10 sec sem resposta.
     }
     
     /**

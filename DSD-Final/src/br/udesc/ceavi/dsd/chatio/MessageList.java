@@ -14,17 +14,17 @@ import br.udesc.ceavi.dsd.chatio.commands.ServerCommandRemoveContact;
  */
 public enum MessageList {
     
-    MESSAGE_LOGIN("LOGIN>",                  ServerCommandLogin.class),
-    MESSAGE_CONNECTED_STATUS("CONNECTED",    null),
-    MESSAGE_CREATE_USER("CREATE>",           ServerCommandCreateUser.class),
-    MESSAGE_ALTER_USER_DATA("ALTER>",        ServerCommandAlterUser.class),
-    MESSAGE_SUCCESS("SUCCESS",               null),
-    MESSAGE_ERROR("ERROR>",                  null),
-    MESSAGE_ADD_CONTACT("ADDCONTACT>",       ServerCommandAddContact.class),
-    MESSAGE_REMOVE_CONTACT("REMOVECONTACT>", ServerCommandRemoveContact.class),
-    MESSAGE_GET_CONTACT_LIST("GETCONTACT",   ServerCommandGetContactList.class),
-    MESSAGE_GET_USER_DATA("GETUSERDATA",     ServerCommandGetUserData.class),
-    MESSAGE_DATA("DATA>",                    null);
+    MESSAGE_LOGIN("LOGIN>",                   ServerCommandLogin.class),
+    MESSAGE_CONNECTED_STATUS("CONNECTED>",    null),
+    MESSAGE_CREATE_USER("CREATE>",            ServerCommandCreateUser.class),
+    MESSAGE_ALTER_USER_DATA("ALTER>",         ServerCommandAlterUser.class),
+    MESSAGE_SUCCESS("SUCCESS>",               null),
+    MESSAGE_ERROR("ERROR>",                   null),
+    MESSAGE_ADD_CONTACT("ADDCONTACT>",        ServerCommandAddContact.class),
+    MESSAGE_REMOVE_CONTACT("REMOVECONTACT>",  ServerCommandRemoveContact.class),
+    MESSAGE_GET_CONTACT_LIST("GETCONTACT>",   ServerCommandGetContactList.class),
+    MESSAGE_GET_USER_DATA("GETUSERDATA>",     ServerCommandGetUserData.class),
+    MESSAGE_DATA("DATA>",                     null);
     
     private final String message;
     private final Class  command;

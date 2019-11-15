@@ -29,6 +29,7 @@ public class Contact implements Serializable {
     private ChatUser contact;
     
     private boolean online;
+    private String  ip;
 
     public long getId() {
         return id;
@@ -60,6 +61,14 @@ public class Contact implements Serializable {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     @Override

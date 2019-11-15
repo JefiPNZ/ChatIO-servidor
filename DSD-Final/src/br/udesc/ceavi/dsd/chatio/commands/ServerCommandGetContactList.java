@@ -4,8 +4,10 @@ import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
+import br.udesc.ceavi.dsd.chatio.data.Contact;
 import br.udesc.ceavi.dsd.chatio.data.ContactDao;
 import com.google.gson.Gson;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -22,10 +24,12 @@ public class ServerCommandGetContactList implements ServerCommand {
     public void execute() {
         Server.getInstance().notifyMessageForUser("Usuário " + executor + " está solicitando a lista de contatos.");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
-        ContactDao  dao     = new ContactDao(factory);
-        ChatUserDao userDao = new ChatUserDao(factory);
-        ChatUser    user    = userDao.findChatUserByLogin(this.executor);
-        this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(dao.findContactEntities(user));
+        ContactDao    dao     = new ContactDao(factory);
+        ChatUserDao   userDao = new ChatUserDao(factory);
+        ChatUser      user    = userDao.findChatUserByLogin(this.executor);
+        List<Contact> contacts = dao.findContactEntities(user);
+        Server.getInstance().loadContactListStatus(contacts);
+        this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(contacts);
         factory.close();
     }
     

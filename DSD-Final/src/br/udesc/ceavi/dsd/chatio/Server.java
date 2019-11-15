@@ -1,6 +1,7 @@
 package br.udesc.ceavi.dsd.chatio;
 
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
+import br.udesc.ceavi.dsd.chatio.data.Contact;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -104,6 +105,20 @@ public class Server {
             }
         }
         return null;
+    }
+    
+    public void loadContactListStatus(List<Contact> contacts){
+        contacts.forEach((contact) -> {
+            ClientNode client = this.findClientConnectionByLogin(contact.getContact().getNickname());
+            if(client != null){
+                contact.setOnline(true);
+                contact.setIp(client.getIp());
+            }
+            else {
+                contact.setOnline(false);
+                contact.setIp("");
+            }
+        });
     }
     
     /**
