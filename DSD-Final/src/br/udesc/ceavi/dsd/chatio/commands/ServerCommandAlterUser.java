@@ -45,7 +45,7 @@ public class ServerCommandAlterUser implements ServerCommand {
                 user.setEmail(this.commandUser.getEmail());
             }
             if(this.commandUser.getPassword() != null){
-                user.setPassword(this.commandUser.getPassword());
+                user.setPassword(Server.getInstance().passwordHash(this.commandUser.getPassword()));
             }
             if(this.commandUser.getNickname()!= null){
                 user.setNickname(this.commandUser.getPassword());
@@ -87,10 +87,5 @@ public class ServerCommandAlterUser implements ServerCommand {
     public void setParams(String params) {
         this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
-    
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
     
 }

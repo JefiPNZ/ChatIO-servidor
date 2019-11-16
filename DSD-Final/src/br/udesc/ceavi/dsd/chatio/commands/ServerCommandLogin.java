@@ -27,6 +27,10 @@ public class ServerCommandLogin implements ServerCommand {
     public void execute() {
         Server server = Server.getInstance();
         server.notifyMessageForUser("Usuário " + executor + " está realizando login como " + this.login + ".");
+        if(this.login.isEmpty() || this.password.isEmpty()){
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário ou senha inválidos...\"}";
+            return;
+        }
         if(server.findClientConnectionByLogin(login) != null){
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário já conectado...\"}";
             return;
@@ -35,7 +39,7 @@ public class ServerCommandLogin implements ServerCommand {
         ChatUserDao dao = new ChatUserDao(factory);
         dao.findChatUserEntities();
         try {
-            ChatUser user = dao.findChatUserByLogin(this.login, this.password);
+            ChatUser user = dao.findChatUserByLogin(this.login, Server.getInstance().passwordHash(this.password));
             ClientNode client = server.findClientConnectionByIp(this.executor);
             if(client == null){
                 this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Cliente já está logado...\"}";
@@ -85,10 +89,5 @@ public class ServerCommandLogin implements ServerCommand {
         String passwordVal = passwordObj != null ? passwordObj.getAsString() : "";
         this.setLogin(nicknameVal, passwordVal);
     }
-    
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
     
 }

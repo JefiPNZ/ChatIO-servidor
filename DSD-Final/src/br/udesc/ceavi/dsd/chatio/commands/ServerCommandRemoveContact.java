@@ -78,9 +78,4 @@ public class ServerCommandRemoveContact implements ServerCommand {
         this.setUser(nicknameVal);
     }
     
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
-    
 }

@@ -22,6 +22,13 @@ public class ServerCommandCreateUser implements ServerCommand {
     @Override
     public void execute() {
         Server.getInstance().notifyMessageForUser("Usuário " + executor + " está criando um novo usuário.");
+        if(this.commandUser.getNickname().isEmpty() ||
+           this.commandUser.getPassword().isEmpty() ||
+           this.commandUser.getEmail().isEmpty() ||
+           this.commandUser.getBirthDate().isEmpty()){
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Dados de cadastro faltando, por favor preencha todos os campos.\"}";
+            return;
+        }
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
         ChatUserDao dao = new ChatUserDao(factory);
         ChatUser user;
@@ -34,6 +41,7 @@ public class ServerCommandCreateUser implements ServerCommand {
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
         }
         else {
+            this.commandUser.setPassword(Server.getInstance().passwordHash(this.commandUser.getPassword()));
             dao.create(this.commandUser);
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         }
@@ -66,10 +74,5 @@ public class ServerCommandCreateUser implements ServerCommand {
     public void setParams(String params) {
         this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
-    
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
     
 }

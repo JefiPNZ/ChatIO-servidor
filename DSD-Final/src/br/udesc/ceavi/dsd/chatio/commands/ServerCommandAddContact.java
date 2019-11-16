@@ -74,10 +74,5 @@ public class ServerCommandAddContact implements ServerCommand {
         String nicknameVal = nicknameObj != null ? nicknameObj.getAsString() : "";
         this.setUser(nicknameVal);
     }
-
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
     
 }

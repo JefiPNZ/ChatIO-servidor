@@ -5,8 +5,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,6 +55,24 @@ public class Server {
     }
     
     /**
+     * Gera o Hash da senha para armazenamento no banco.
+     * @param password
+     * @return 
+     */
+    public String passwordHash(String password){
+        // Hash atual é um SHA-512.
+        try {
+            byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            BigInteger bigInt = new BigInteger(1, md.digest(bytes));
+            password = bigInt.toString(16);
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+        return password;
+    }
+    
+    /**
      * Método principal para execução da aplicação.
      * @param args 
      */
@@ -69,7 +91,8 @@ public class Server {
                 Socket         connection = this.socket.accept();
                 PrintWriter    out        = new PrintWriter(connection.getOutputStream(), true);
                 BufferedReader in         = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                this.initClient(connection, out, in, connection.getInetAddress().getHostAddress() + ":" + connection.getPort());
+                String         ip         = connection.getInetAddress().getHostAddress() + connection.getPort();
+                this.initClient(connection, out, in, ip);
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }

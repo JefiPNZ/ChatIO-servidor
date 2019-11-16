@@ -50,9 +50,4 @@ public class ServerCommandGetUserData implements ServerCommand {
 
     @Override
     public void setParams(String params) {}
-    
-	@Override
-	public void cleanResult() {
-		this.result = null;
-	}
 }

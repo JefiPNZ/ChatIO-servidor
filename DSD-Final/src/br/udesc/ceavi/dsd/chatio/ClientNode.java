@@ -30,6 +30,7 @@ public class ClientNode implements Runnable {
     
     /**
      * Cria um novo cliente para se comunicar através do IP informado.
+     * @param connection
      * @param input  Objeto para leitura dos dados do cliente.
      * @param output Objeto para envio de dados para o cliente.
      * @param ip     Endereço IP do CLiente.
@@ -66,7 +67,6 @@ public class ClientNode implements Runnable {
                                 invoker.executeCommand(command);
                                 Server.getInstance().notifyMessageForUser("Retorno do comando do Usuário " + (this.login != null ? this.login : this.ip) + ": " + command.getResult());
                                 output.println(command.getResult());
-                                command.cleanResult();
                             }
                             else {
                                 Server.getInstance().notifyMessageForUser("Comando desconhecido: " + message);
@@ -77,7 +77,7 @@ public class ClientNode implements Runnable {
                 }
                 try {
                     Thread.sleep(100);
-//                     Se a conexão expirou, para a thread.
+                    // Se a conexão expirou, para a thread.
                     if(this.timeoutMiliseconds < System.currentTimeMillis()){
                         this.disconnect();
                     }
@@ -90,7 +90,7 @@ public class ClientNode implements Runnable {
                 this.disconnect();
                 break;
             } catch(Exception ex) {
-                output.println(MessageList.MESSAGE_ERROR +  "{\"mensagem\":\"" + ex.getClass().toString() + ":" + ex.getMessage() + "\"}");
+                output.println(MessageList.MESSAGE_ERROR +  "{\"message\":\"" + ex.getClass().toString() + ":" + ex.getMessage() + "\"}");
             }
         }
         Server.getInstance().notifyClientDisconected(this);
