@@ -29,4 +29,8 @@ public interface ServerCommand {
      */
     public void setParams(String params);
     
+    /**
+     * Limpa a variável de resultado do comando
+     * */
+    public void cleanResult();
 }

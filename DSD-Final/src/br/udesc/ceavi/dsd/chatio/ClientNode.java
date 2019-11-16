@@ -66,6 +66,7 @@ public class ClientNode implements Runnable {
                                 invoker.executeCommand(command);
                                 Server.getInstance().notifyMessageForUser("Retorno do comando do Usuário " + (this.login != null ? this.login : this.ip) + ": " + command.getResult());
                                 output.println(command.getResult());
+                                command.cleanResult();
                             }
                             else {
                                 Server.getInstance().notifyMessageForUser("Comando desconhecido: " + message);

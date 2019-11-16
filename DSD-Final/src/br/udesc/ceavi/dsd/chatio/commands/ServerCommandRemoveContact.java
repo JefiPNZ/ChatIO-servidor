@@ -36,7 +36,7 @@ public class ServerCommandRemoveContact implements ServerCommand {
         ChatUser user = userDao.findChatUserByLogin(this.executor);
         ChatUser targetContact = userDao.findChatUserByLogin(this.commandUser);
         if(user == null || targetContact == null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usuário não encontrado.\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário não encontrado.\"}";
         }
         
         try {
@@ -44,7 +44,7 @@ public class ServerCommandRemoveContact implements ServerCommand {
             dao.destroy(contact.getId());
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         } catch (NonexistentEntityException ex) {
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"" + ex.getMessage() + "\"}";
             Logger.getLogger(ServerCommandRemoveContact.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
@@ -77,5 +77,10 @@ public class ServerCommandRemoveContact implements ServerCommand {
         String nicknameVal = nicknameObj != null ? nicknameObj.getAsString() : "";
         this.setUser(nicknameVal);
     }
+    
+	@Override
+	public void cleanResult() {
+		this.result = null;
+	}
     
 }

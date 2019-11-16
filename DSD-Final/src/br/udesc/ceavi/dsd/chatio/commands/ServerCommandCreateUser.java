@@ -31,7 +31,7 @@ public class ServerCommandCreateUser implements ServerCommand {
             user = null;
         }
         if(user != null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
         }
         else {
             dao.create(this.commandUser);
@@ -66,5 +66,10 @@ public class ServerCommandCreateUser implements ServerCommand {
     public void setParams(String params) {
         this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
+    
+	@Override
+	public void cleanResult() {
+		this.result = null;
+	}
     
 }

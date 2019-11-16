@@ -35,7 +35,7 @@ public class ServerCommandAddContact implements ServerCommand {
         }
         catch (NoResultException ex){}
         if(contact.getUser() == null || contact.getContact() == null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usuário não encontrado.\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário não encontrado.\"}";
         }
         else {
             ContactDao dao = new ContactDao(factory);
@@ -74,5 +74,10 @@ public class ServerCommandAddContact implements ServerCommand {
         String nicknameVal = nicknameObj != null ? nicknameObj.getAsString() : "";
         this.setUser(nicknameVal);
     }
+
+	@Override
+	public void cleanResult() {
+		this.result = null;
+	}
     
 }

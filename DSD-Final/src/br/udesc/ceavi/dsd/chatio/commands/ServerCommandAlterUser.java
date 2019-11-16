@@ -35,7 +35,7 @@ public class ServerCommandAlterUser implements ServerCommand {
             user = null;
         }
         if(user == null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
         }
         else {
             if(this.commandUser.getBirthDate() != null){
@@ -54,7 +54,7 @@ public class ServerCommandAlterUser implements ServerCommand {
                 dao.edit(user);
                 this.result = MessageList.MESSAGE_SUCCESS.toString();
             } catch (Exception ex) {
-                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"" + ex.getMessage() + "\"}";
+                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"" + ex.getMessage() + "\"}";
                 Logger.getLogger(ServerCommandAlterUser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -87,5 +87,10 @@ public class ServerCommandAlterUser implements ServerCommand {
     public void setParams(String params) {
         this.setUser(new Gson().fromJson(params, ChatUser.class));
     }
+    
+	@Override
+	public void cleanResult() {
+		this.result = null;
+	}
     
 }

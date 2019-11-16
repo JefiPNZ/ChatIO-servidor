@@ -28,7 +28,7 @@ public class ServerCommandLogin implements ServerCommand {
         Server server = Server.getInstance();
         server.notifyMessageForUser("Usuário " + executor + " está realizando login como " + this.login + ".");
         if(server.findClientConnectionByLogin(login) != null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usuário já conectado...\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário já conectado...\"}";
             return;
         }
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
@@ -38,14 +38,14 @@ public class ServerCommandLogin implements ServerCommand {
             ChatUser user = dao.findChatUserByLogin(this.login, this.password);
             ClientNode client = server.findClientConnectionByIp(this.executor);
             if(client == null){
-                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Cliente já está logado...\"}";
+                this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Cliente já está logado...\"}";
             }
             else {
                 client.setLogin(user.getNickname());
                 this.result = MessageList.MESSAGE_SUCCESS.toString();
             }
         } catch (NoResultException ex){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Nenhum Usuário Encontrado\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Nenhum Usuário Encontrado\"}";
         }
         finally {
             factory.close();
@@ -85,5 +85,10 @@ public class ServerCommandLogin implements ServerCommand {
         String passwordVal = passwordObj != null ? passwordObj.getAsString() : "";
         this.setLogin(nicknameVal, passwordVal);
     }
+    
+	@Override
+	public void cleanResult() {
+		this.result = null;
+	}
     
 }
