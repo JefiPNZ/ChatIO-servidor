@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  * Entidade para representar um contato do sistema.
@@ -28,7 +29,9 @@ public class Contact implements Serializable {
     @JoinColumn(name = "contact", referencedColumnName = "id", foreignKey = @ForeignKey(name = "none"))
     private ChatUser contact;
     
+    @Transient
     private boolean online;
+    @Transient
     private String  ip;
 
     public long getId() {
