@@ -91,7 +91,7 @@ public class Server {
                 Socket         connection = this.socket.accept();
                 PrintWriter    out        = new PrintWriter(connection.getOutputStream(), true);
                 BufferedReader in         = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String         ip         = connection.getInetAddress().getHostAddress() + connection.getPort();
+                String         ip         = connection.getInetAddress().getHostAddress() + ":" + connection.getPort();
                 this.initClient(connection, out, in, ip);
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,9 +127,15 @@ public class Server {
         return null;
     }
     
-    public void loadContactListStatus(List<Contact> contacts){
+    public void loadContactListStatus(List<Contact> contacts, String executor){
         contacts.forEach((contact) -> {
-            ClientNode client = this.findClientConnectionByLogin(contact.getContact().getNickname());
+            ClientNode client;
+            if(contact.getContact().getNickname().equals(executor)){
+                client = this.findClientConnectionByLogin(contact.getUser().getNickname());
+            }
+            else {
+                client = this.findClientConnectionByLogin(contact.getContact().getNickname());
+            }
             if(client != null){
                 contact.setOnline(true);
                 contact.setIp(client.getIp());
