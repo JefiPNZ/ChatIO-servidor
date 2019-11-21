@@ -39,6 +39,14 @@ public class ServerCommandAddContact implements ServerCommand {
         }
         else {
             ContactDao dao = new ContactDao(factory);
+            try {
+                Contact duplicate = dao.findContactEntity(contact.getUser(), contact.getContact());
+                if(duplicate != null){
+                    this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Contato já adicionado.\"}";
+                    return;
+                }
+            }
+            catch(NoResultException ex){} // Caso não encontre, continua normalmente pois não está duplicado.
             dao.create(contact);
             Contact contact2 = new Contact();
             contact2.setUser(contact.getContact());
