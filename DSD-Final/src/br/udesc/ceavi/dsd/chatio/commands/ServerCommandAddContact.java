@@ -40,6 +40,10 @@ public class ServerCommandAddContact implements ServerCommand {
         else {
             ContactDao dao = new ContactDao(factory);
             dao.create(contact);
+            Contact contact2 = new Contact();
+            contact2.setUser(contact.getContact());
+            contact2.setContact(contact.getUser());
+            dao.create(contact2);
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         }
         factory.close();

@@ -42,6 +42,8 @@ public class ServerCommandRemoveContact implements ServerCommand {
         try {
             Contact contact = dao.findContactEntity(user, targetContact);
             dao.destroy(contact.getId());
+            contact = dao.findContactEntity(targetContact, user);
+            dao.destroy(contact.getId());
             this.result = MessageList.MESSAGE_SUCCESS.toString();
         } catch (NonexistentEntityException ex) {
             this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"" + ex.getMessage() + "\"}";

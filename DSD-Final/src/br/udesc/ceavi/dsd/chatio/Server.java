@@ -130,12 +130,7 @@ public class Server {
     public void loadContactListStatus(List<Contact> contacts, String executor){
         contacts.forEach((contact) -> {
             ClientNode client;
-            if(contact.getContact().getNickname().equals(executor)){
-                client = this.findClientConnectionByLogin(contact.getUser().getNickname());
-            }
-            else {
-                client = this.findClientConnectionByLogin(contact.getContact().getNickname());
-            }
+            client = this.findClientConnectionByLogin(contact.getUser().getNickname());
             if(client != null){
                 contact.setOnline(true);
                 contact.setIp(client.getIp());

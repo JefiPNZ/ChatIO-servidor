@@ -30,7 +30,7 @@ public class ServerCommandGetContactList implements ServerCommand {
         try {
             ChatUser user = userDao.findChatUserByLogin(this.executor);
             List<Contact> contacts = dao.findContactEntities(user);
-            Server.getInstance().loadContactListStatus(contacts);
+            Server.getInstance().loadContactListStatus(contacts, this.executor);
             this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(contacts);
 
         } catch (Exception ex) {

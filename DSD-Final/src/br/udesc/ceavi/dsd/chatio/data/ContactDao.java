@@ -117,8 +117,7 @@ public class ContactDao implements Serializable {
             CriteriaQuery cq = cb.createQuery();
             Root<Contact> c = cq.from(Contact.class);
             cq.select(c)
-              .where(cb.or(cb.equal(c.get("user"), user.getId()),
-                           cb.equal(c.get("contact"), user.getId())));
+              .where(cb.equal(c.get("user"), user.getId()));
             
             Query q = em.createQuery(cq);
             return q.getResultList();
