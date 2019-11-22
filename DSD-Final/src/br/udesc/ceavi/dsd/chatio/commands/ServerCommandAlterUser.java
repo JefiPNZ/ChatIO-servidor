@@ -1,5 +1,6 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
+import br.udesc.ceavi.dsd.chatio.ClientNode;
 import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
@@ -35,7 +36,7 @@ public class ServerCommandAlterUser implements ServerCommand {
             user = null;
         }
         if(user == null){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usu\u00e1rio com o nome j\u00e1 existe.\"}";
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usu\u00e1rio com o nome não existe.\"}";
         }
         else {
             if(this.commandUser.getBirthDate() != null){
@@ -48,11 +49,18 @@ public class ServerCommandAlterUser implements ServerCommand {
                 user.setPassword(Server.getInstance().passwordHash(this.commandUser.getPassword()));
             }
             if(this.commandUser.getNickname()!= null){
-                user.setNickname(this.commandUser.getPassword());
+                user.setNickname(this.commandUser.getNickname());
             }
             try {
                 dao.edit(user);
-                this.result = MessageList.MESSAGE_SUCCESS.toString();
+                ClientNode client = Server.getInstance().findClientConnectionByLogin(this.executor);
+                if(client == null){
+                    this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Cliente não está logado...\"}";
+                }
+                else {
+                    client.setLogin(user.getNickname());
+                    this.result = MessageList.MESSAGE_SUCCESS.toString();
+                }
             } catch (Exception ex) {
                 this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"" + ex.getMessage() + "\"}";
                 Logger.getLogger(ServerCommandAlterUser.class.getName()).log(Level.SEVERE, null, ex);

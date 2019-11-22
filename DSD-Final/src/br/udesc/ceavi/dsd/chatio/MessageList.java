@@ -6,6 +6,7 @@ import br.udesc.ceavi.dsd.chatio.commands.ServerCommandCreateUser;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandGetContactList;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandGetUserData;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogin;
+import br.udesc.ceavi.dsd.chatio.commands.ServerCommandLogout;
 import br.udesc.ceavi.dsd.chatio.commands.ServerCommandRemoveContact;
 
 /**
@@ -15,6 +16,7 @@ import br.udesc.ceavi.dsd.chatio.commands.ServerCommandRemoveContact;
 public enum MessageList {
     
     MESSAGE_LOGIN("LOGIN>",                   ServerCommandLogin.class),
+    MESSAGE_DISCONNECT("LOGOUT>",             ServerCommandLogout.class),
     MESSAGE_CONNECTED_STATUS("CONNECTED>",    null),
     MESSAGE_CREATE_USER("CREATE>",            ServerCommandCreateUser.class),
     MESSAGE_ALTER_USER_DATA("ALTER>",         ServerCommandAlterUser.class),

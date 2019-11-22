@@ -127,6 +127,21 @@ public class Server {
         return null;
     }
     
+    /**
+     * Busca o índice cliente com o ip informado.
+     * @param ip
+     * @return 
+     */
+    public int findClientConnectionIdByIp(String ip){
+        for(int i = 0; i < this.clients.size(); i++){
+            ClientNode client = this.clients.get(i);
+            if(client.getIp().equals(ip)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public void loadContactListStatus(List<Contact> contacts, String executor){
         contacts.forEach((contact) -> {
             ClientNode client;
@@ -151,8 +166,10 @@ public class Server {
     }
     
     public void initClient(Socket connection, PrintWriter out, BufferedReader in, String ip){
-        if(this.findClientConnectionByIp(ip) != null){
-            this.notifyMessageForUser("Usuário já conectado do ip" + ip);
+        int currUser = this.findClientConnectionIdByIp(ip);
+        if(currUser != -1){
+            this.notifyMessageForUser("Usuário já conectado do ip " + ip + ", desconectando.");
+            this.clients.get(currUser).disconnect();
         }
         else {
             this.notifyMessageForUser("Usuário conectou do ip " + ip);

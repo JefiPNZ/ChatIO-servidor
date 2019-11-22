@@ -1,36 +1,36 @@
 package br.udesc.ceavi.dsd.chatio.commands;
 
+import br.udesc.ceavi.dsd.chatio.ClientNode;
 import br.udesc.ceavi.dsd.chatio.MessageList;
 import br.udesc.ceavi.dsd.chatio.Server;
 import br.udesc.ceavi.dsd.chatio.data.ChatUser;
 import br.udesc.ceavi.dsd.chatio.data.ChatUserDao;
-import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
- * Comando para criar um Usuário.
+ * Comando para realizar o login no servidor.
  * @author Bruno Galeazzi Rech, Jeferson Penz
  */
-public class ServerCommandGetUserData implements ServerCommand {
+public class ServerCommandLogout implements ServerCommand {
     
     private String result;
     private String executor;
 
     @Override
     public void execute() {
-        Server.getInstance().notifyMessageForUser("Usuário " + executor + " está buscando seus dados.");
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DSD-FinalPU");
-        ChatUserDao dao = new ChatUserDao(factory);
-        try {
-            ChatUser user = dao.findChatUserByLogin(this.executor);
-            this.result = MessageList.MESSAGE_DATA.toString() + new Gson().toJson(user, ChatUser.class);
-        } catch(NoResultException ex){
-            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"mensagem\":\"Usu\u00e1rio n\u00e1o encontrado.\"}";
+        Server server = Server.getInstance();
+        ClientNode client = server.findClientConnectionByLogin(this.executor);
+        if(client == null){
+            this.result = MessageList.MESSAGE_ERROR.toString() + "{\"message\":\"Usuário não está logado...\"}";
         }
-        finally {
-            factory.close();
+        else {
+            client.setLogin(null);
+            this.result = MessageList.MESSAGE_SUCCESS.toString();
         }
     }
     
@@ -50,4 +50,5 @@ public class ServerCommandGetUserData implements ServerCommand {
 
     @Override
     public void setParams(String params) {}
+    
 }
